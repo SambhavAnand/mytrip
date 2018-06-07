@@ -20,17 +20,17 @@ export const compareTwoCoords = (coord1, coord2) => {
   else return false;
 }
 
-export const openUberApp = (uberPrice,originLocation,destinationLocation) => {
+export const openUberApp = (uberType,originLocation,destinationLocation) => {
   return new Promise((resolve, reject) => {
-    Linking.openURL(`uber://?client_id=HzlOkKu18wLp1gBSr02NrkYjuRIiDzaT&action=setPickup&pickup[latitude]=${originLocation.latitude}&pickup[longitude]=${originLocation.longitude}&dropoff[latitude]=${destinationLocation.latitude}&dropoff[longitude]=${destinationLocation.longitude}&product_id=a1111c8c-c720-46c3-8534-2fcdd730040d`)
+    Linking.openURL(`uber://?client_id=bTG3SUljswcFOyT2rJmTbsuGqDZL3t7I&action=setPickup&pickup[latitude]=${originLocation.latitude}&pickup[longitude]=${originLocation.longitude}&dropoff[latitude]=${destinationLocation.latitude}&dropoff[longitude]=${destinationLocation.longitude}&product_id=${uberType.productId}`)
     .then(open=>resolve(open))
     .catch(error=>reject(error));
   });
 }
 
-export const openLyftApp = (lyftPrice, originLocation, destinationLocation) => {
+export const openLyftApp = (lyftType, originLocation, destinationLocation) => {
   return new Promise((resolve, reject) => {
-    Linking.openURL(`lyft://rideType?id=${lyftPrice.rideType}&pickup[latitude]=${originLocation.latitude}&pickup[longitude]=${originLocation.longitude}&dropoff[latitude]=${destinationLocation.latitude}&dropoff[longitude]=${destinationLocation.longitude}`)
+    Linking.openURL(`lyft://ridetype?id=${lyftType.rideType}&pickup[latitude]=${originLocation.latitude}&pickup[longitude]=${originLocation.longitude}&destination[latitude]=${destinationLocation.latitude}&destination[longitude]=${destinationLocation.longitude}&partner=kt75oWbW_8Qy`)
     .then(open=>resolve(open))
     .catch(error=>reject(error));
   });
