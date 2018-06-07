@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 /*Custom Imports*/
 import {locationStyles as styles, googlePlacesStyle as inputStyles} from './styles.js';
+import {GOOGLE_API_KEY} from '../../../utilities/config';
 
 
 
@@ -42,7 +43,7 @@ export default class LocationSearch extends React.Component {
             ref={map=>(this.map = map)}
             getDefaultValue={() => ''}
             query={{
-              key: 'AIzaSyDw5XAceefaWiQT1dCdfkF_XXBDruTbdw0',
+              key: GOOGLE_API_KEY,
               language: 'en', // language of the results
             }}
             textInputHide={textInputHide}

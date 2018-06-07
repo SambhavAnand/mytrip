@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {Linking} from 'react-native';
+import {UBER_CLIENT_ID, LYFT_CLIENT_ID} from './config';
 
 export const getPrices = (start_latitude,start_longitude,end_latitude,end_longitude) => {
   return new Promise((resolve, reject) => {
@@ -22,7 +23,7 @@ export const compareTwoCoords = (coord1, coord2) => {
 
 export const openUberApp = (uberType,originLocation,destinationLocation) => {
   return new Promise((resolve, reject) => {
-    Linking.openURL(`uber://?client_id=bTG3SUljswcFOyT2rJmTbsuGqDZL3t7I&action=setPickup&pickup[latitude]=${originLocation.latitude}&pickup[longitude]=${originLocation.longitude}&dropoff[latitude]=${destinationLocation.latitude}&dropoff[longitude]=${destinationLocation.longitude}&product_id=${uberType.productId}`)
+    Linking.openURL(`uber://?client_id=${UBER_CLIENT_ID}&action=setPickup&pickup[latitude]=${originLocation.latitude}&pickup[longitude]=${originLocation.longitude}&dropoff[latitude]=${destinationLocation.latitude}&dropoff[longitude]=${destinationLocation.longitude}&product_id=${uberType.productId}`)
     .then(open=>resolve(open))
     .catch(error=>reject(error));
   });
@@ -30,7 +31,7 @@ export const openUberApp = (uberType,originLocation,destinationLocation) => {
 
 export const openLyftApp = (lyftType, originLocation, destinationLocation) => {
   return new Promise((resolve, reject) => {
-    Linking.openURL(`lyft://ridetype?id=${lyftType.rideType}&pickup[latitude]=${originLocation.latitude}&pickup[longitude]=${originLocation.longitude}&destination[latitude]=${destinationLocation.latitude}&destination[longitude]=${destinationLocation.longitude}&partner=kt75oWbW_8Qy`)
+    Linking.openURL(`lyft://ridetype?id=${lyftType.rideType}&pickup[latitude]=${originLocation.latitude}&pickup[longitude]=${originLocation.longitude}&destination[latitude]=${destinationLocation.latitude}&destination[longitude]=${destinationLocation.longitude}&partner=${LYFT_CLIENT_ID}`)
     .then(open=>resolve(open))
     .catch(error=>reject(error));
   });

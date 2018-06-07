@@ -15,7 +15,7 @@ import {openUberApp, openLyftApp} from '../../utilities/services';
 
 
 class ResultScreen extends React.Component {
-  
+
   constructor(props) {
     super(props);
   }
@@ -151,7 +151,7 @@ class ResultScreen extends React.Component {
                 </TouchableOpacity>
               </ScrollView>
             </View>
-        <Text style={{color:"#555"}}>Results powered by MyTrip</Text>
+          <Text style={{color:"#555"}}>Results powered by MyTrip</Text>
         </ScrollView>
       </View>
     );
