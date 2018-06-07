@@ -27,3 +27,11 @@ export const openUberApp = (uberPrice,originLocation,destinationLocation) => {
     .catch(error=>reject(error));
   });
 }
+
+export const openLyftApp = (lyftPrice, originLocation, destinationLocation) => {
+  return new Promise((resolve, reject) => {
+    Linking.openURL(`lyft://rideType?id=${lyftPrice.rideType}&pickup[latitude]=${originLocation.latitude}&pickup[longitude]=${originLocation.longitude}&dropoff[latitude]=${destinationLocation.latitude}&dropoff[longitude]=${destinationLocation.longitude}`)
+    .then(open=>resolve(open))
+    .catch(error=>reject(error));
+  });
+}

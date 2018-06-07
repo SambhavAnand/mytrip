@@ -11,13 +11,30 @@ import {
 import {connect} from 'react-redux';
 /*Custom Imports*/
 import styles from './styles';
-import {openUberApp} from '../../utilities/services';
+import {openUberApp, openLyftApp} from '../../utilities/services';
 
 
 class ResultScreen extends React.Component {
+  
   constructor(props) {
     super(props);
   }
+
+  openLyft = (lyftType) => {
+    const {originLocation, destinationLocation} = {...this.props.location};
+    openLyftApp(lyftType, originLocation, destinationLocation)
+    .catch(error=>Alert.alert(
+      'Something went wrong',
+      'Try again',
+      [
+        {
+          text: 'Ok',
+          onPress: ()=>{}
+        }
+      ]
+    ));
+  }
+
   openUber = (uberType) => {
     const {originLocation, destinationLocation} = {...this.props.location};
     openUberApp(uberType, originLocation, destinationLocation)
@@ -32,6 +49,7 @@ class ResultScreen extends React.Component {
       ]
     ));
   }
+
   render() {
     const {uberPrices, lyftPrices, taxiPrice} = {...this.props.prices};
     const {originLocation, destinationLocation} = {...this.props.location};
@@ -104,7 +122,10 @@ class ResultScreen extends React.Component {
                   {
                     lyftPrices.map((lyftPrice, key)=>
                       (
-                        <TouchableOpacity style={styles.pricingView} key={key}>
+                        <TouchableOpacity
+                          style={styles.pricingView}
+                          key={key}
+                          onPress={()=>this.openLyft(lyftPrice)}                        >
                           <View style={styles.rideTypeLyft} >
                             <Text style={styles.rideTypeText}>{lyftPrice.displayName}</Text>
                           </View>
