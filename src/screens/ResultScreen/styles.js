@@ -23,7 +23,7 @@ export default StyleSheet.create({
     paddingBottom:0.05*height,
     paddingLeft:0.02*width,
     paddingRight:0.02*width,
-      paddingTop:0.05*height,
+    paddingTop:0.05*height,
     backgroundColor:"#2196f3",
     shadowColor:"#000",
     shadowOffset:{width:0,height:1},

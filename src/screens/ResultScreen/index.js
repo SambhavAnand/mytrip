@@ -5,18 +5,33 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  Image
+  Image,
+  Alert
 } from 'react-native';
 import {connect} from 'react-redux';
 /*Custom Imports*/
 import styles from './styles';
+import {openUberApp} from '../../utilities/services';
 
 
 class ResultScreen extends React.Component {
   constructor(props) {
     super(props);
   }
-
+  openUber = (uberType) => {
+    const {originLocation, destinationLocation} = {...this.props.location};
+    openUberApp(uberType, originLocation, destinationLocation)
+    .catch(error=>Alert.alert(
+      'Something went wrong',
+      'Try again',
+      [
+        {
+          text: 'Ok',
+          onPress: ()=>{}
+        }
+      ]
+    ));
+  }
   render() {
     const {uberPrices, lyftPrices, taxiPrice} = {...this.props.prices};
     const {originLocation, destinationLocation} = {...this.props.location};
@@ -67,7 +82,11 @@ class ResultScreen extends React.Component {
                     uberPrices.map((uberPrice, key)=>
                       uberPrice.priceLow?
                         (
-                          <TouchableOpacity style={styles.pricingView} key={key}>
+                          <TouchableOpacity
+                            style={styles.pricingView}
+                            key={key}
+                            onPress={()=>this.openUber(uberPrice)}
+                          >
                             <View style={styles.rideTypeUber}>
                               <Text style={styles.rideTypeText}>{uberPrice.displayName}</Text>
                             </View>
