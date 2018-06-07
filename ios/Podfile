@@ -1,0 +1,46 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'mytrip' do
+  rn_path = '../node_modules/react-native'
+  rn_maps_path = '../node_modules/react-native-maps'
+  pod 'React', :path => '../node_modules/react-native', :subspecs => [
+    'Core',
+    'CxxBridge', # Include this for RN >= 0.47
+    'DevSupport', # Include this to enable In-App Devmenu if RN >= 0.43
+    'RCTText',
+    'RCTNetwork',
+    'RCTGeolocation',
+    'RCTImage',
+    'RCTSettings',
+    'RCTWebSocket', # Needed for debugging
+    'RCTAnimation', # Needed for FlatList and animations running on native UI thread
+    # Add any other subspecs you want to use in your project
+  ]
+  # Explicitly include Yoga if you are using RN >= 0.42.0
+  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+
+  # Third party deps podspec link
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+  
+  pod 'react-native-maps', path: rn_maps_path
+  pod 'react-native-google-maps', path: rn_maps_path
+  pod 'GoogleMaps'  # Remove this line if you don't want to support GoogleMaps on iOS
+  pod 'Google-Maps-iOS-Utils' # Remove this line if you don't want to support GoogleMaps on iOS
+
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == 'react-native-google-maps'
+      target.build_configurations.each do |config|
+        config.build_settings['CLANG_ENABLE_MODULES'] = 'No'
+      end
+    end
+    if target.name == "React"
+      target.remove_from_project
+    end
+  end
+end
