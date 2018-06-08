@@ -56,20 +56,24 @@ class Home extends React.Component {
 
   componentDidMount() {
       const {dispatch} = {...this.props};
-      navigator.geolocation.getCurrentPosition((position) => dispatch(setOriginLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          value: "Current Location",
-          isLatLong: false
-        })), (error) => Alert.alert(
+      navigator.geolocation.getCurrentPosition(position => dispatch(setOriginLocation({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        value: "Current Location",
+        isLatLong: false
+      })), error => {
+        Alert.alert(
           'Error getting current location',
           'Enter location manually',
           [
-            {text: 'Ok', onPress: ()=> {}}
+            {
+              text: 'Ok',
+              onPress: ()=>{}
+            }
           ]
-        ))
+        )
+      })
     }
-
 
     animateGoButton = () => {
       Animated.timing(this.state.goButtonStyle, {
@@ -95,7 +99,9 @@ class Home extends React.Component {
           this.setState({loading:false});
         })
         .then(()=>this.props.navigation.navigate('ResultScreen'))
-        .catch(error=>Alert.alert(
+        .catch(error=>{
+          this.setState({loading: false});
+          Alert.alert(
           'Something went wrong',
           'Try again',
           [
@@ -103,7 +109,7 @@ class Home extends React.Component {
               text: 'Ok', onPress: () => {}
             }
           ]
-        ));
+        )});
     }
 
 

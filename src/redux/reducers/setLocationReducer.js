@@ -6,7 +6,7 @@ import {
 } from '../actions/setLocationActions';
 
 const initialState = {
-  originLocation: {latitude: 40.7831, longitude: 73.9712, value: 'Manhattan'},
+  originLocation: {latitude: 40.7830603, longitude: -73.9712488, value: 'Manhattan'},
   destinationLocation: null,
 
 };
