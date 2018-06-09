@@ -5,6 +5,7 @@ import {
   Text,
   Animated,
   Alert,
+  Linking,
   ActivityIndicator
 } from 'react-native';
 import MapView from 'react-native-maps';
@@ -30,9 +31,8 @@ import {
   setLyftPrices,
   setTaxiPrice
 } from '../../redux/actions/setPricesActions';
-import {getPrices, compareTwoCoords} from '../../utilities/services';
+import {getPrices, compareTwoCoords, tryLocationAuth} from '../../utilities/services';
 import styles from './styles';
-
 
 class Home extends React.Component {
 
@@ -64,16 +64,22 @@ class Home extends React.Component {
       })), error => {
         Alert.alert(
           'Error getting current location',
-          'Enter location manually',
+          'Try authorizing again or enter location manually',
           [
             {
               text: 'Ok',
               onPress: ()=>{}
+            },
+            {
+              text: 'Authorize',
+              onPress: ()=> Linking.openURL('app-settings:')
             }
           ]
         )
       })
     }
+
+
 
     animateGoButton = () => {
       Animated.timing(this.state.goButtonStyle, {
