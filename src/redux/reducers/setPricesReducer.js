@@ -3,13 +3,15 @@ import {handleActions} from 'redux-actions';
 import {
   setUberPrices,
   setLyftPrices,
+  setJunoPrices,
   setTaxiPrice
 } from '../actions/setPricesActions';
 
 const initialState = {
   uberPrices: [],
   lyftPrices: [],
-  taxiPrice: []
+  taxiPrice: [],
+  junoPrices: []
 };
 
 
@@ -27,6 +29,13 @@ export default handleActions({
     return ({
     ...state,
     lyftPrices: lyftPrices
+  })},
+  [setJunoPrices]: (state, action) => {
+    let junoPrices = action.payload;
+    junoPrices.sort((priceA, priceB) => priceA.priceLow - priceB.priceLow);
+    return ({
+      ...state,
+      junoPrices: junoPrices
   })},
   [setTaxiPrice]: (state, action) => {
     let taxiPrice = action.payload.toFixed(2);

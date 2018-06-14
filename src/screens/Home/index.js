@@ -29,7 +29,8 @@ import {
 import {
   setUberPrices,
   setLyftPrices,
-  setTaxiPrice
+  setTaxiPrice,
+  setJunoPrices
 } from '../../redux/actions/setPricesActions';
 import {getPrices, compareTwoCoords, tryLocationAuth} from '../../utilities/services';
 import styles from './styles';
@@ -98,10 +99,11 @@ class Home extends React.Component {
       this.setState({loading:true});
       getPrices(originLocation.latitude, originLocation.longitude, destinationLocation.latitude, destinationLocation.longitude)
         .then(prices=>{
-          let {uber, lyft, taxi} = {...prices};
+          let {uber, lyft, taxi, juno} = {...prices};
           dispatch(setUberPrices(uber));
           dispatch(setLyftPrices(lyft));
           dispatch(setTaxiPrice(taxi));
+          dispatch(setJunoPrices((juno)));
           this.setState({loading:false});
         })
         .then(()=>this.props.navigation.navigate('ResultScreen'))

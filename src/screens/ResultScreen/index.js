@@ -11,7 +11,7 @@ import {
 import {connect} from 'react-redux';
 /*Custom Imports*/
 import styles from './styles';
-import {openUberApp, openLyftApp} from '../../utilities/services';
+import {openUberApp, openLyftApp, openJunoApp} from '../../utilities/services';
 
 
 class ResultScreen extends React.Component {
@@ -51,7 +51,7 @@ class ResultScreen extends React.Component {
   }
 
   render() {
-    const {uberPrices, lyftPrices, taxiPrice} = {...this.props.prices};
+    const {uberPrices, lyftPrices, taxiPrice, junoPrices} = {...this.props.prices};
     const {originLocation, destinationLocation} = {...this.props.location};
     return (
       <View style={styles.mainView}>
@@ -90,6 +90,20 @@ class ResultScreen extends React.Component {
           </View>
         </View>
         <ScrollView style={styles.priceView}>
+            <View>
+              <Image style={styles.logo} source={require("../../assets/nyctaxi.jpg")}/>
+              <ScrollView
+                style={styles.priceScroll}
+                horizontal={true}
+              >
+                <TouchableOpacity style={styles.pricingView}>
+                  <View style={styles.rideTypeTaxi}>
+                    <Text style={styles.rideTypeText}>Taxi</Text>
+                  </View>
+                  <Text style={styles.price}>${taxiPrice}</Text>
+                </TouchableOpacity>
+              </ScrollView>
+            </View>
             <View>
               <Image style={styles.logo} source={require("../../assets/uberlogo.png")}/>
               <ScrollView
@@ -137,22 +151,35 @@ class ResultScreen extends React.Component {
                   }
               </ScrollView>
             </View>
-            <View>
-              <Image style={styles.logo} source={require("../../assets/nyctaxi.jpg")}/>
-              <ScrollView
-                style={styles.priceScroll}
-                horizontal={true}
-              >
-                <TouchableOpacity style={styles.pricingView}>
-                  <View style={styles.rideTypeTaxi}>
-                    <Text style={styles.rideTypeText}>Taxi</Text>
-                  </View>
-                  <Text style={styles.price}>${taxiPrice}</Text>
-                </TouchableOpacity>
-              </ScrollView>
-            </View>
-          <Text style={{color:"#555"}}>Results powered by MyTrip</Text>
+            {
+              junoPrices.length !== 0 &&
+              <View>
+                <Image style={styles.logo} source={require("../../assets/juno.jpg")}/>
+                <ScrollView
+                  style={styles.priceScroll}
+                  horizontal={true}>
+                    {
+                      junoPrices.map((junoPrice, key)=>
+                        (
+                          <TouchableOpacity
+                            style={styles.pricingView}
+                            key={key}
+                          >
+                            <View style={styles.rideTypeLyft} >
+                              <Text style={styles.rideTypeText}>{junoPrice.displayName}</Text>
+                            </View>
+                            <Text style={styles.price}>
+                            {junoPrice.priceLow===junoPrice.priceHigh?'$' +junoPrice.priceLow:'$'+junoPrice.priceLow +'- $'+junoPrice.priceHigh}
+                            </Text>
+                          </TouchableOpacity>
+                      ))
+                    }
+                </ScrollView>
+              </View>
+            }
+
         </ScrollView>
+        <Text style={{color:"#555"}}>Results powered by MyTrip</Text>
       </View>
     );
   }
