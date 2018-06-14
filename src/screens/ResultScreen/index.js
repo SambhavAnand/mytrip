@@ -90,69 +90,78 @@ class ResultScreen extends React.Component {
           </View>
         </View>
         <ScrollView style={styles.priceView}>
-            <View>
-              <Image style={styles.logo} source={require("../../assets/nyctaxi.jpg")}/>
-              <ScrollView
-                style={styles.priceScroll}
-                horizontal={true}
-              >
-                <TouchableOpacity style={styles.pricingView}>
-                  <View style={styles.rideTypeTaxi}>
-                    <Text style={styles.rideTypeText}>Taxi</Text>
-                  </View>
-                  <Text style={styles.price}>${taxiPrice}</Text>
-                </TouchableOpacity>
-              </ScrollView>
-            </View>
-            <View>
-              <Image style={styles.logo} source={require("../../assets/uberlogo.png")}/>
-              <ScrollView
-                style={styles.priceScroll}
-                horizontal={true}
-                bounces={true}>
-                  {
-                    uberPrices.map((uberPrice, key)=>
-                      uberPrice.priceLow?
+            {
+              taxiPrice &&
+              <View>
+                <Image style={styles.logo} source={require("../../assets/nyctaxi.jpg")}/>
+                <ScrollView
+                  style={styles.priceScroll}
+                  horizontal={true}
+                >
+                  <TouchableOpacity style={styles.pricingView}>
+                    <View style={styles.rideTypeTaxi}>
+                      <Text style={styles.rideTypeText}>Taxi</Text>
+                    </View>
+                    <Text style={styles.price}>${taxiPrice}</Text>
+                  </TouchableOpacity>
+                </ScrollView>
+              </View>
+            }
+            {
+              uberPrices &&
+              <View>
+                <Image style={styles.logo} source={require("../../assets/uberlogo.png")}/>
+                <ScrollView
+                  style={styles.priceScroll}
+                  horizontal={true}
+                  bounces={true}>
+                    {
+                      uberPrices.map((uberPrice, key)=>
+                        uberPrice.priceLow?
+                          (
+                            <TouchableOpacity
+                              style={styles.pricingView}
+                              key={key}
+                              onPress={()=>this.openUber(uberPrice)}
+                            >
+                              <View style={styles.rideTypeUber}>
+                                <Text style={styles.rideTypeText}>{uberPrice.displayName}</Text>
+                              </View>
+                              <Text style={styles.price}>${uberPrice.priceLow} - ${uberPrice.priceHigh}</Text>
+                            </TouchableOpacity>
+                        ):null)
+                    }
+                </ScrollView>
+              </View>
+            }
+            {
+              lyftPrices &&
+              <View>
+                <Image style={styles.logo} source={require("../../assets/lyft.png")}/>
+                <ScrollView
+                  style={styles.priceScroll}
+                  horizontal={true}>
+                    {
+                      lyftPrices.map((lyftPrice, key)=>
                         (
                           <TouchableOpacity
                             style={styles.pricingView}
                             key={key}
-                            onPress={()=>this.openUber(uberPrice)}
-                          >
-                            <View style={styles.rideTypeUber}>
-                              <Text style={styles.rideTypeText}>{uberPrice.displayName}</Text>
+                            onPress={()=>this.openLyft(lyftPrice)}                        >
+                            <View style={styles.rideTypeLyft} >
+                              <Text style={styles.rideTypeText}>{lyftPrice.displayName}</Text>
                             </View>
-                            <Text style={styles.price}>${uberPrice.priceLow} - ${uberPrice.priceHigh}</Text>
+                            <Text style={styles.price}>
+                            {lyftPrice.priceLow===lyftPrice.priceHigh?'$' + parseInt(lyftPrice.priceLow/100):'$'+parseInt(lyftPrice.priceLow/100) +'- $'+parseInt(lyftPrice.priceHigh/100)}
+                            </Text>
                           </TouchableOpacity>
-                      ):null)
-                  }
-              </ScrollView>
-            </View>
-            <View>
-              <Image style={styles.logo} source={require("../../assets/lyft.png")}/>
-              <ScrollView
-                style={styles.priceScroll}
-                horizontal={true}>
-                  {
-                    lyftPrices.map((lyftPrice, key)=>
-                      (
-                        <TouchableOpacity
-                          style={styles.pricingView}
-                          key={key}
-                          onPress={()=>this.openLyft(lyftPrice)}                        >
-                          <View style={styles.rideTypeLyft} >
-                            <Text style={styles.rideTypeText}>{lyftPrice.displayName}</Text>
-                          </View>
-                          <Text style={styles.price}>
-                          {lyftPrice.priceLow===lyftPrice.priceHigh?'$' + parseInt(lyftPrice.priceLow/100):'$'+parseInt(lyftPrice.priceLow/100) +'- $'+parseInt(lyftPrice.priceHigh/100)}
-                          </Text>
-                        </TouchableOpacity>
-                    ))
-                  }
-              </ScrollView>
-            </View>
+                      ))
+                    }
+                </ScrollView>
+              </View>
+            }
             {
-              junoPrices.length !== 0 &&
+              junoPrices &&
               <View>
                 <Image style={styles.logo} source={require("../../assets/juno.jpg")}/>
                 <ScrollView

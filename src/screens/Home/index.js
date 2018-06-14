@@ -80,8 +80,6 @@ class Home extends React.Component {
       })
     }
 
-
-
     animateGoButton = () => {
       Animated.timing(this.state.goButtonStyle, {
         toValue: 1,
@@ -119,8 +117,6 @@ class Home extends React.Component {
           ]
         )});
     }
-
-
 
   render() {
     const {dispatch} = {...this.props};
