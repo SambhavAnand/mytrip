@@ -86,6 +86,22 @@ export default StyleSheet.create({
     borderBottomRightRadius:0,
     borderBottomLeftRadius:0,
     },
+    rideTypeJuno:{
+      backgroundColor:"#1A2A43",
+      paddingTop:10,
+      paddingBottom:10,
+      width:150,
+      display:'flex',
+      flexDirection:'row',
+      justifyContent:'center',
+      alignItems:'center',
+      borderRadius:6,
+      borderWidth:1,
+      borderColor:"#1A2A43",
+
+      borderBottomRightRadius:0,
+      borderBottomLeftRadius:0,
+      },
    rideTypeTaxi:{
       backgroundColor:"#EFB13D",
       paddingTop:10,

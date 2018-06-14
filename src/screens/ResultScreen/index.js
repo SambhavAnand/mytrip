@@ -165,7 +165,7 @@ class ResultScreen extends React.Component {
                             style={styles.pricingView}
                             key={key}
                           >
-                            <View style={styles.rideTypeLyft} >
+                            <View style={styles.rideTypeJuno} >
                               <Text style={styles.rideTypeText}>{junoPrice.displayName}</Text>
                             </View>
                             <Text style={styles.price}>
